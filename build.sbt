@@ -1,14 +1,9 @@
-
 name := "metrics-json"
 description := "Expose dropwizard metrics in json"
-organization := "io.tabmo"
-
-licenses += ("Apache-2.0", url("http://opensource.org/licenses/Apache-2.0"))
-
-bintrayOrganization := Some("tabmo")
 
 lazy val GlobalSettings = Seq(
-  scalaVersion := "2.12.3",
+  organization := "io.tabmo",
+  scalaVersion := "2.11.8",
   crossScalaVersions := Seq("2.11.8", "2.12.3"),
   scalacOptions ++= Seq(
     "-deprecation", // Emit warning and location for usages of deprecated APIs.
@@ -26,7 +21,10 @@ lazy val GlobalSettings = Seq(
   scalacOptions in(Compile, compile) ++= Seq(// Disable for tests
     "-Xlint:-missing-interpolator", // Additional warnings (see scalac -Xlint:help)
     "-Ywarn-adapted-args" // Warn if an argument list is modified to match the receive
-  )
+  ),
+  licenses += ("Apache-2.0", url("http://opensource.org/licenses/Apache-2.0")),
+  bintrayOrganization := Some("tabmo"),
+  releaseCrossBuild := true
 )
 
 lazy val root = (project in file("."))
@@ -47,10 +45,13 @@ lazy val `metrics-circe` = (project in file("modules/metrics-circe"))
   ).map(_ % circeVersion % Compile))
   .settings(libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % Test)
   .dependsOn(`metrics-core`)
+  .aggregate(`metrics-core`)
 
 val playJsonVersion = "2.6.2"
 lazy val `metrics-playjson` = (project in file("modules/metrics-playjson"))
   .settings(GlobalSettings)
   .settings(libraryDependencies += "com.typesafe.play" %% "play-json" % playJsonVersion % Compile)
   .settings(libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % Test)
+  .settings(libraryDependencies += "org.joda" % "joda-convert" % "1.8.1" % Compile)
   .dependsOn(`metrics-core`)
+  .aggregate(`metrics-core`)
