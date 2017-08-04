@@ -30,6 +30,7 @@ lazy val GlobalSettings = Seq(
 )
 
 lazy val root = (project in file("."))
+  .settings(GlobalSettings)
   .aggregate(`metrics-circe`,`metrics-playjson`)
 
 lazy val `metrics-core` = (project in file("modules/metrics-core"))
