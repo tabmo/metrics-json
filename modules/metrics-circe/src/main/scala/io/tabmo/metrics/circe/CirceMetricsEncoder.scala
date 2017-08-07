@@ -1,10 +1,8 @@
 package io.tabmo.metrics.circe
 
 import scala.math.BigDecimal.RoundingMode
-
-import com.codahale.metrics.{Counter, Meter, MetricRegistry, Timer}
+import com.codahale.metrics.{Counter, Gauge, Meter, MetricRegistry, Timer}
 import io.tabmo.metrics.{Nano, Rate}
-
 import io.circe.{Encoder, Json}
 import io.circe.syntax._
 import nl.grons.metrics.scala.DefaultInstrumented
@@ -22,6 +20,20 @@ trait CirceMetricsEncoder {
     Json.obj(
       "count" -> counter.getCount.asJson
     )
+  }
+
+  def encodeGauge(gauge: Gauge[_]): Json = {
+    gauge.getValue match {
+      case x: Int => Json.fromInt(x)
+      case x: Long => Json.fromLong(x)
+      case x: Float => Json.fromFloatOrNull(x)
+      case x: Double => Json.fromDoubleOrNull(x)
+      case x: BigDecimal => Json.fromBigDecimal(x)
+      case x: BigInt => Json.fromBigInt(x)
+      case x: Boolean => Json.fromBoolean(x)
+      case x: String => Json.fromString(x)
+      case _ => Json.fromString(gauge.getValue.toString)
+    }
   }
 
   implicit val timerEncoder: Encoder[Timer] = Encoder.instance { timer =>
@@ -67,6 +79,7 @@ trait CirceMetricsEncoder {
         case (s, m: Meter) => (s, m.asJson)
         case (s, t: Timer) => (s, t.asJson)
         case (s, c: Counter) => (s, c.asJson)
+        case (s, g: Gauge[_]) => (s, encodeGauge(g))
       }.toMap.asJson
     )
   }
