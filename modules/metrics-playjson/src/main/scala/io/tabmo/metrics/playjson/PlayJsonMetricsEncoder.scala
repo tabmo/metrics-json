@@ -61,11 +61,26 @@ trait PlayJsonMetricsEncoder {
     )
   }
 
+  implicit def gaugeEncoder: Writes[Gauge[_]] = Writes { gauge =>
+    gauge.getValue match {
+      case x: Int => JsNumber(x)
+      case x: Long => JsNumber(x)
+      case x: Float => JsNumber(x.toDouble)
+      case x: Double => JsNumber(x)
+      case x: BigDecimal => JsNumber(x)
+      case x: BigInt => JsNumber(BigDecimal(x))
+      case x: Boolean => JsBoolean(x)
+      case x: String => JsString(x)
+      case _ => JsString(gauge.getValue.toString)
+    }
+  }
+
   implicit val metricRegisterEncoder: Writes[MetricRegistry] = Writes[MetricRegistry] { metrics =>
     def encode(key: String, metric: Metric) = metric match {
       case m: Meter => Json.obj(key -> m)
       case t: Timer => Json.obj(key -> t)
       case c: Counter => Json.obj(key -> c)
+      case g: Gauge[_] => Json.obj(key -> g)
       case _ => Json.obj()
     }
 
