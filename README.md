@@ -1,37 +1,46 @@
 # metrics-json
-expose metrics in json
 
-## Requirement
+Expose Dropwizard metrics in json
 
-* Add repository
+Compatible with scala 2.11 and scala 2.12, with play-json and circe.
 
-```
-"Tabmo Bintray" at "https://dl.bintray.com/tabmo/maven"
-```
+## Installation
 
-* Use scala 2.11 or 2.12
+### Select `metrics-json` version
 
-* Add dependencies
-
-```scala
-val metricsCirceVersion = ...
-libraryDependencies += "io.tabmo" %% "metrics-circe" % metricsCirceVersion
-
-// Or use playjson
-
-val metricsPlayjsonVersion = ...
-libraryDependencies += "io.tabmo" %% "metrics-playjson" % metricsPlayjsonVersion
-```
-
-## metrics-circe
+*Circe*
 
 |Circe version   | metrics-circe version  |
 |----------------|------------------------|
 | 0.8.0          |  0.1                   |
+| 0.9.A          |  0.3                   |
 
-### Example with play 2.6
+*Play-json*
 
-* You need to add dependencies for `play-circe`
+|Play json version   | metrics-playjson version  |
+|--------------------|---------------------------|
+| 2.6.2              |  0.1                      |
+| 2.6.7              |  0.3                      |
+
+### Add Dependency
+
+```
+resolvers += Resolver.bintrayRepo("tabmo", "maven")
+```
+
+```scala
+// For Circe
+libraryDependencies += "io.tabmo" %% "metrics-circe" % metricsCirceVersion
+
+// For Play-json
+libraryDependencies += "io.tabmo" %% "metrics-playjson" % metricsPlayjsonVersion
+```
+
+## Usage
+
+### Circe (eg with Play 2.6)
+
+Required dependency: `play-circe`
 
 ```scala
 libraryDependencies += "play-circe" %% "play-circe" % s"2.6-$playCirceVersion"
@@ -50,7 +59,7 @@ class MetricController(val controllerComponents: ControllerComponents) extends B
 
   import io.circe.syntax._
   import io.tabmo.metrics.circe._
-  
+
   def get = Action {
     Metrics.callToApiCounter.inc()
     Ok()
@@ -67,13 +76,8 @@ object Metrics extends DefaultInstrumented {
 }
 ```
 
-## metrics-playjson
+### Play-json (eg with Play 2.6)
 
-|Play json version   | metrics-playjson version  |
-|--------------------|---------------------------|
-| 2.6.2              |  0.1                      |
-
-### Example with play 2.6
 
 ```scala
 package play.api.libs.circe
@@ -88,7 +92,7 @@ class MetricController(val controllerComponents: ControllerComponents) extends B
 
   import play.api.libs.json.Writes
   import io.tabmo.metrics.playjson._
-  
+
   def get = Action {
     Metrics.callToApiCounter.inc()
     Ok()

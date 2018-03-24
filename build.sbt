@@ -4,7 +4,8 @@ description := "Expose dropwizard metrics in json"
 lazy val GlobalSettings = Seq(
   organization := "io.tabmo",
   scalaVersion := "2.11.8",
-  crossScalaVersions := Seq("2.11.8", "2.12.3"),
+  crossScalaVersions := Seq("2.11.8", "2.12.5"),
+  resolvers += "aaa".at("sdsd"),
   scalacOptions ++= Seq(
     "-deprecation", // Emit warning and location for usages of deprecated APIs.
     "-feature", // Emit warning and location for usages of features that should be imported explicitly.
@@ -35,7 +36,7 @@ lazy val `metrics-core` = (project in file("modules/metrics-core"))
   .settings(GlobalSettings)
   .settings(libraryDependencies += "nl.grons" %% "metrics-scala" % "3.5.9" % Compile)
 
-val circeVersion = "0.8.0"
+val circeVersion = "0.9.2"
 lazy val `metrics-circe` = (project in file("modules/metrics-circe"))
   .settings(GlobalSettings)
   .settings(libraryDependencies ++= Seq(
@@ -47,7 +48,7 @@ lazy val `metrics-circe` = (project in file("modules/metrics-circe"))
   .dependsOn(`metrics-core`)
   .aggregate(`metrics-core`)
 
-val playJsonVersion = "2.6.2"
+val playJsonVersion = "2.6.7"
 lazy val `metrics-playjson` = (project in file("modules/metrics-playjson"))
   .settings(GlobalSettings)
   .settings(libraryDependencies += "com.typesafe.play" %% "play-json" % playJsonVersion % Compile)
