@@ -5,7 +5,7 @@ import scala.math.BigDecimal.RoundingMode
 import com.codahale.metrics._
 import io.tabmo.metrics.{Nano, Rate}
 
-import nl.grons.metrics.scala.DefaultInstrumented
+import nl.grons.metrics4.scala.DefaultInstrumented
 
 trait PlayJsonMetricsEncoder {
 
@@ -84,7 +84,7 @@ trait PlayJsonMetricsEncoder {
       case _ => Json.obj()
     }
 
-    import scala.collection.JavaConverters._
+    import scala.jdk.CollectionConverters._
     metrics.getMetrics.asScala.toSeq.sortBy(_._1).foldLeft(Json.obj("timestamp" -> java.time.Instant.now().toString)) { (json, e) =>
       json ++ encode(e._1, e._2)
     }

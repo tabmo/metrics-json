@@ -5,7 +5,7 @@ import com.codahale.metrics.{Counter, Gauge, Meter, MetricRegistry, Timer}
 import io.tabmo.metrics.{Nano, Rate}
 import io.circe.{Encoder, Json}
 import io.circe.syntax._
-import nl.grons.metrics.scala.DefaultInstrumented
+import nl.grons.metrics4.scala.DefaultInstrumented
 
 trait CirceMetricsEncoder {
 
@@ -71,7 +71,8 @@ trait CirceMetricsEncoder {
   }
 
   implicit val metricRegisterEncoder: Encoder[MetricRegistry] = Encoder.instance { metrics =>
-    import scala.collection.JavaConverters._
+    import scala.jdk.CollectionConverters._
+
     Json.obj(
       "timestamp" -> java.time.Instant.now().toString.asJson
     ).deepMerge(
