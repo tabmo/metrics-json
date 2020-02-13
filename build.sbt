@@ -30,7 +30,7 @@ lazy val `metrics-core` = (project in file("modules/metrics-core"))
   .settings(GlobalSettings)
   .settings(libraryDependencies += "nl.grons" %% "metrics4-scala" % "4.1.1" % Compile)
 
-val circeVersion = "0.12.3"
+val circeVersion = "0.13.0"
 lazy val `metrics-circe` = (project in file("modules/metrics-circe"))
   .settings(GlobalSettings)
   .settings(libraryDependencies ++= Seq(
