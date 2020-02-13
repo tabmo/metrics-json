@@ -14,6 +14,8 @@ Compatible with scala 2.11 and scala 2.12, with play-json and circe.
 |----------------|------------------------|
 | 0.8.0          |  0.1                   |
 | 0.9.A          |  0.3                   |
+| 0.12.3         |  1.0                   |
+| 0.13.0         |  1.1                   |
 
 *Play-json*
 
@@ -21,6 +23,7 @@ Compatible with scala 2.11 and scala 2.12, with play-json and circe.
 |--------------------|---------------------------|
 | 2.6.2              |  0.1                      |
 | 2.6.7              |  0.3                      |
+| 2.7.4              |  1.A                      |
 
 ### Add Dependency
 
