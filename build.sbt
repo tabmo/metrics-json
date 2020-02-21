@@ -38,15 +38,15 @@ lazy val `metrics-circe` = (project in file("modules/metrics-circe"))
     "io.circe" %% "circe-generic",
     "io.circe" %% "circe-parser"
   ).map(_ % circeVersion % Compile))
-  .settings(libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % Test)
+  .settings(libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.1" % Test)
   .dependsOn(`metrics-core`)
   .aggregate(`metrics-core`)
 
-val playJsonVersion = "2.7.4"
+val playJsonVersion = "2.8.1"
 lazy val `metrics-playjson` = (project in file("modules/metrics-playjson"))
   .settings(GlobalSettings)
   .settings(libraryDependencies += "com.typesafe.play" %% "play-json" % playJsonVersion % Compile)
-  .settings(libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % Test)
+  .settings(libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.1" % Test)
   .settings(libraryDependencies += "org.joda" % "joda-convert" % "2.2.1" % Compile)
   .dependsOn(`metrics-core`)
   .aggregate(`metrics-core`)

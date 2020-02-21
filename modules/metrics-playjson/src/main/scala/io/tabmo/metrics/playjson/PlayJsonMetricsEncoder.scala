@@ -61,7 +61,7 @@ trait PlayJsonMetricsEncoder {
     )
   }
 
-  implicit def gaugeEncoder: Writes[Gauge[_]] = Writes { gauge =>
+  def gaugeEncoder(gauge: Gauge[_]): JsValue = {
     gauge.getValue match {
       case x: Int => JsNumber(x)
       case x: Long => JsNumber(x)
@@ -80,7 +80,7 @@ trait PlayJsonMetricsEncoder {
       case m: Meter => Json.obj(key -> m)
       case t: Timer => Json.obj(key -> t)
       case c: Counter => Json.obj(key -> c)
-      case g: Gauge[_] => Json.obj(key -> g)
+      case g: Gauge[_] => Json.obj(key -> gaugeEncoder(g))
       case _ => Json.obj()
     }
 
