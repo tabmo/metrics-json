@@ -25,7 +25,7 @@ Compatible with scala 2.11 and scala 2.12, with play-json and circe.
 ### Add Dependency
 
 ```
-resolvers += Resolver.bintrayRepo("tabmo", "maven")
+resolvers += "Tabmo MyGet Public" at "https://www.myget.org/F/tabmo-public/maven/"
 ```
 
 ```scala
