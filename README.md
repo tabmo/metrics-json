@@ -24,12 +24,12 @@ Compatible with scala 2.11 and scala 2.12, with play-json and circe.
 | 2.6.2              |  0.1                      |
 | 2.6.7              |  0.3                      |
 | 2.7.4              |  1.1                      |
-| 2.8.1              |  1.2                      |
+| 2.8.1              |  1.2.1                    |
 
 ### Add Dependency
 
 ```
-resolvers += Resolver.bintrayRepo("tabmo", "maven")
+resolvers += "Tabmo MyGet Public" at "https://www.myget.org/F/tabmo-public/maven/"
 ```
 
 ```scala
